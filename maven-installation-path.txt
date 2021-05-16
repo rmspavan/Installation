@@ -1,0 +1,22 @@
+#####Java Installation On RedHat or AmazonLinux#######
+sudo yum install java-1.8.0-openjdk-devel -y
+#########Updating Java and JaveCVersion
+sudo update-alternatives --config java    ########## Selecet Version 1.8.0
+sudo update-alternatives --config javac    ########## Selecet Version 1.8.0
+sudo yum install git -y
+
+cd /opt/
+wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+tar -xvzf apache-maven-3.3.9-bin.tar.gz
+rm -rf apache-maven-3.3.9-bin.tar.gz
+mv apache-maven-3.3.9 maven-3.3.9
+## Set Maven Path in ~/.bashrc file
+vim ~/.bashrc
+##Copy paste the below content in ~/.bashrc file at the end
+
+export M2_HOME=/opt/maven-3.3.9
+export M2=$M2_HOME/bin
+export PATH=$M2:$PATH
+
+source ~/.bashrc
+mvn --version

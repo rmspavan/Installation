@@ -1,0 +1,48 @@
+## Installing Tomcat on linux machine ##
+
+## Java is the dependency for tomcat to work
+## Installing java
+sudo yum install java-1.8.0-openjdk-devel -y
+
+## Updating alternatives of java and javac
+sudo update-alternatives --config java    ##choosejava 1.8.0 version
+sudo update-alternatives --config javac    ## choose java-1.8.0 version
+
+cd /opt
+
+## Download tomcat
+sudo wget http://redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz
+
+## Untar the file
+sudo tar -xf apache-tomcat-8.5.31.tar.gz
+
+## Rename the file
+sudo mv apache-tomcat-8.5.31 tomcat8
+
+## Change the ownership of tomcat to ec2-user
+sudo chown -R ec2-user:ec2-user tomcat8
+
+## Starting tomcat server
+${TOMCAT_HOME}/bin/startup.sh
+
+## Note: default port of tomcat is 8080
+## Stopping tomcat server
+${TOMCAT_HOME}/bin/shutdown.sh
+
+## Troubleshooting is done with help of tomcat log files
+${TOMCAT_HOME}/logs
+
+## Tomcat manager is the web application, using this we manage applications running on tomcat By default access is restricted to this application##
+## Remove the restriction to manager application
+vi /opt/tomcat8/webapps/manager/META-INF/context.xml
+(Remove the <Value> …….</Value> from this file)
+
+## Add user to access tomcat manager application
+vi /opt/tomcat8/conf/tomcat-users.xml
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<user username="javahome" password="javahome" roles="manager-gui,manager-script"/>
+   
+## Changing Tomcat Port Number
+vim /opt/tomcat8/conf/server.xml
+    (Change port 8080 to desired port which are under HTTP ports)
